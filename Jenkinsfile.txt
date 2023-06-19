@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                
-                sh 'docker build -t your-image-name .'
+                sh 'docker build -t myflaskapp .'
             }
         }
 
@@ -33,9 +33,9 @@ pipeline {
         stage('Finalize') {
             steps {
                 
-                sh 'docker stop $(docker ps -q --filter ancestor=your-image-name)'
+                sh 'docker stop $(docker ps -q --filter ancestor=myflaskapp)'
                 
-                sh 'docker push your-image-name'
+                sh 'docker push myflaskapp'
             }
         }
     }
@@ -44,7 +44,7 @@ pipeline {
         always {
             
             sh 'docker rm $(docker ps -a -q)'
-            sh 'docker rmi your-image-name'
+            sh 'docker rmi myflaskapp'
         }
     }
 }
