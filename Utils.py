@@ -1,10 +1,4 @@
-import os
+# This file will contain general information and operations we need for our game.
 
-SCORES_FILE_NAME = "Score.txt"
-BAD_RETURN_CODE = -1
-
-def screen_cleaner():
-    if os.name == "nt":
-        os.system("cls")
-    else:
-        os.system("clear")
+BAD_RETURN_CODE = "File Not Found!"
+SCORES_FILE_NAME = "TextFiles/Scores.txt"
