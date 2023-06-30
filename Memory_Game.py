@@ -1,20 +1,42 @@
 import random
 import time
-def generate_sequence(difficulty):
-    return random.sample(range(1, 102), difficulty)
+from Score import converting_to_score
 
-def get_list_from_user(difficulty):
-    numbers = []
-    for i in range(difficulty):
-        number = int(input(f"Please enter number {i + 1} of {difficulty}: "))
-        numbers.append(number)
-    return numbers
 
-def is_list_equal(list1,list2):
-    return list1 == list2
+def memory_game(difficulty, name):
+    print("Ready?")
+    time.sleep(0.8)
+    print("3....")
+    time.sleep(0.9)
+    print("2...")
+    time.sleep(1)
+    print("1..")
+    time.sleep(1.1)
+    digits = difficulty
+    digits = int(digits)
 
-def play(difficulty):
-    seq = generate_sequence(difficulty)
-    print(f"Remember these numbers:\n{seq}\n")
-    user_list = get_list_from_user(difficulty)
-    return is_list_equal(seq, user_list)
+    sequence = []
+    for i in range(0, digits):
+        sequence.append(random.randint(1, 101))
+
+    print(sequence)
+
+    time.sleep(0.7)
+    for i in range(1, 100):
+        print(' ')
+
+    try:
+        count = 1
+        for i in range(0, digits):
+            num = int(input('What was the number at index - ' + str(i) + "?"))
+            while num != sequence[i]:
+                num = int(input("wrong! please try again: "))
+                count += 1
+
+            if num == sequence[i]:
+                print("Correct!\nYou are a genius!!")
+                print('it took you', count, "guesses!")
+                return count, converting_to_score(difficulty, name)
+
+    except ValueError:
+        print("Wrong!\nSorry you lost...\nit was: ")
