@@ -1,50 +1,38 @@
 pipeline {
     agent any
-
     stages {
-        stage('Checkout') {
+        stage('Checkout') { 
             steps {
-             
-               git 'https://github.com/dandayan556/WorldOfGames'
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'a0588011-0ff0-44cf-9a6d-20ced963a817', url: 'https://github.com/matbuha/WorldOfGames.git']]])
             }
         }
-
-        stage('Build') {
+        stage('Build') { 
             steps {
-               
-                sh 'docker build -t myflaskapp' .
+                bat 'docker build -t jenkinsdocker:latest .'
             }
         }
-
-        stage('Run') {
+        stage('Run') { 
             steps {
-                
-                sh 'docker run -d -p 8777:8777 -v 'C:\Users\mgidy\PycharmProjects\pythonProject\DevOps2702\Scores.txt' myflaskapp'
+                bat 'docker compose up -d'
             }
         }
-
-        stage('Test') {
+        stage('Test') { 
             steps {
-               
-                sh 'python e2e.py'
+                git branch: 'main', credentialsId: 'a0588011-0ff0-44cf-9a6d-20ced963a817', url: 'https://github.com/matbuha/WorldOfGames.git'
+                bat 'python e2e.py'
             }
         }
-
-        stage('Finalize') {
+        stage('Finalize') { 
             steps {
-                
-                sh 'docker stop $(docker ps -q --filter ancestor=myflaskapp)'
-                
-                sh 'docker push myflaskapp'
+                bat 'docker compose stop'
+                bat 'docker tag jenkinsdocker arielbenzikri/jenkinsdocker:latest'
+                bat 'docker push arielbenzikri/jenkinsdocker:latest'
             }
         }
     }
-
-    post {
-        always {
-            
-            sh 'docker rm $(docker ps -a -q)'
-            sh 'docker rmi myflaskapp'
+        post {
+            always {
+                bat 'docker logout'
+            }
         }
-    }
 }
