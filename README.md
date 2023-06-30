@@ -1,17 +1,9 @@
+       About Me👨‍💻 :
+I am a Devops Student from Israel.
 
-LinkedIn Badge docker Badge facebook Badge
+Exploring Technical Content Writing🌱.
 
-hey there 
+In my free time, I learn more and more knowledge about DevOps to become a DevOps Master⚡.
 
----
-👨‍💻 About Me :
-I am a Computer Science Student  from Israel.
-
-🌱 Exploring Technical Content Writing.
-
-⚡ In my free time, I learn more and more knowledge about DevOps to become a DevOps Master.
-
-📫How to reach me: Linkedin Badge
-
-🛠️ Languages and Tools :
-vscode  visualstudio  vagrant  ubuntu  python  kubernetes  jenkins  github  docker  amazonwebservices 
+                                 Languages and Tools🛠️ :
+Vscode, Visualstudio, Vagrant, Ubuntu, Python, Kubernetes, Jenkins, Git, Docker, Amazonwebservices 
