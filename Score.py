@@ -1,12 +1,18 @@
-import os
-SCORES_FILE = 'Scores.txt'
-def add_score(difficulty):
-    points = (difficulty * 3) + 5
-    if os.path.exists(SCORES_FILE):
-        with open(SCORES_FILE, 'r+') as file:
-            current_score = int(file.read())
-            file.seek(0)
-            file.write(str(current_score + points))
-    else:
-        with open(SCORES_FILE, 'w') as file:
-            file.write(str(points))
+from Utils import SCORES_FILE_NAME, BAD_RETURN_CODE
+
+
+def converting_to_score(difficulty, name):
+    try:
+        # this code will convert the difficulty to score.
+        x = difficulty
+        score = (x * 3) + 5
+        print(f" Your score is {score} !")
+
+# this code writing "name" and "score" to TXT file.
+        with open(SCORES_FILE_NAME, "w") as file:
+            file.write(f'{name}  {score}\n')
+        return file
+
+    except FileNotFoundError as e:
+        print(f"File NOT found! {e.args}")
+        return BAD_RETURN_CODE
