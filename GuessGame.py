@@ -1,33 +1,32 @@
 import random
-def generate_number(difficulty):
-    secret_number=(random.randint(1, difficulty))
-    return secret_number
+import time
+from Score import converting_to_score
 
-def get_guess_from_user(difficulty):
-    while True:
-        try:
-            guess_number = int(input(f"Please guess a number between 1 and {difficulty}: "))
-            if guess_number < 1 or guess_number > difficulty:
-                raise ValueError
-            return guess_number
-        except ValueError:
-            print(f"Invalid input. Please enter a number between 1 and {difficulty}: ")
 
-def compare_results(secret_number, guess_number):
-    if guess_number == secret_number:
-        return 0
-    elif guess_number < secret_number:
-        return -1
-    else:
-        return 1
+def guess_game(difficulty, name):
+    num = difficulty
+    secret = random.randint(1, int(num))
+    guess = None
+    count = 0
+    while guess != secret:
+        guess = input(f"Please type a number between 1 and {num} :")
+        time.sleep(1.5)
+        if guess.isdigit():
+            guess = int(guess)
+            count += 1
 
-def play():
-    secret_number = generate_number()
-    for i in range(5):
-        guess_number = get_guess_from_user()
-        if guess_number == secret_number:
-            print("Congratulations, you won!")
-            return True
-        print("The secret number is", "greater" if guess_number < secret_number else "less", "than your guess.")
-    print("Sorry, you lost the game.")
-    return False
+        if guess == secret:
+            print("...")
+            time.sleep(1.1)
+            print("You won!")
+            print('it took you', count, "guesses!")
+            return count, converting_to_score(difficulty, name)
+
+        else:
+            print("....")
+            time.sleep(0.8)
+            print("Please try again")
+            count += 1
+
+    print('it took you', count, "guesses!")
+    # return count
