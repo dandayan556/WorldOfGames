@@ -1,35 +1,23 @@
-from flask import Flask
+from flask import Flask, render_template
 
-app = Flask(__name__)
-SCORES_FILE = 'Scores.txt'
 
-def read_score():
-    try:
-        with open(SCORES_FILE, 'r') as file:
-            return int(file.read().strip())
-    except FileNotFoundError:
-        return 'Score file not found'
-    except ValueError:
-        return 'Invalid score value'
+def my_flask():
+    app = Flask(__name__)
+    all_scores = open("Scores.txt").read().split()
+    name = all_scores[0]
+    score = all_scores[1]
 
-score = read_score()
+    @app.route("/", methods=['GET'])
+    @app.route("/home")
+    def home():
+        return render_template('home.html', score=score, name=name)
 
-@app.route('/')
-def score_server():
-    color = 'red' if isinstance(score, str) else 'black'
-    escaped_score = str(score)
+    @app.route("/about")
+    def about():
+        return render_template('about.html', title='About')
 
-    return f'''
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Scores Game</title>
-        </head>
-        <body>
-            <h1>The score is <div id="score" style="color:{color}">{escaped_score}</div></h1>
-        </body>
-    </html>
-    '''
+    if __name__ == '__main__':
+        app.run(debug=True, host='0.0.0.0', port=5000)
 
-if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+
+my_flask()
