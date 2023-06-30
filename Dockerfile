@@ -1,14 +1,18 @@
 FROM python:3.11.2
 
-WORKDIR /app
+WORKDIR /MyDockFile
 
-COPY . /app
+RUN python --version
 
-RUN pip install -r requirements.txt
+COPY requierments.txt .
 
-COPY Scores.txt /Scores.txt
+RUN pip install --upgrade pip && pip install -r requierments.txt
 
-CMD ["python", "Live.py"]
+COPY Scores.txt /MyDockFile/Scores.txt
+
+COPY . .
+
+CMD ["python", "-u", "MainScores.py"]
 
 
 
