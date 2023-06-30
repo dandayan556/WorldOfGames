@@ -1,29 +1,43 @@
-import requests
+import datetime
 import random
+import time
+from easy_exchange_rates import API
+from Score import converting_to_score
 
-class CurrencyRouletteGame:
-    def __init__(self, difficulty):
-        self.difficulty = difficulty
 
-    def get_money_interval(self,total_value_of_money):
-        url = 'https://free.currconv.com/api/v7/convert?q=USD_ILS&compact=ultra&apiKey=YOUR_API_KEY'
-        response = requests.get(url)
-        exchange_rate = response.json()['USD_ILS']
-        lower_bound = total_value_of_money - (5 - self.difficulty) * exchange_rate
-        upper_bound = total_value_of_money + (5 - self.difficulty) * exchange_rate
-        return (lower_bound,upper_bound)
+def currency_roulette(difficulty, name):
+    try:
+        api = API()
+        time_series = api.get_exchange_rates(
+          base_currency="USD",
+          start_date=str(datetime.date.today()),
+          end_date=str(datetime.date.today()),
+          targets=["ILS"]
+        )
+        get_money_interval = round(api.to_dataframe(time_series).values.__float__(), 2)
 
-    def get_guess_from_user(self, total_value_of_money):
-        guess = input(f'Guess the value of {total_value_of_money} USD in ILS: ')
-        return float(guess)
+        d = float(difficulty)
+        random_num = random.randint(1, 100)
+        t = random_num / get_money_interval
 
-    def play(self):
-        total_value_of_money = random.randint(1, 100)
-        interval = self.get_money_interval(total_value_of_money)
-        guess = self.get_guess_from_user(total_value_of_money)
-        if interval[0] <= guess <= interval[1]:
-            print('Congratulations! You won!')
-            return True
-        else:
-            print(f'Sorry, you lost. The value was {total_value_of_money} USD = {total_value_of_money * exchange_rate} ILS.')
-            return False
+        range_max = round(t + (5 - d), 2)
+        range_min = round(t - (5 - d), 2)
+
+        guess = 0
+        count = 0
+
+        while not range_min < guess < range_max:
+            print("....")
+            time.sleep(0.8)
+            guess = float(input(f"How much is {random_num} ILS in USD?"))
+            count += 1
+
+        if range_min < guess < range_max:
+            print("...")
+            time.sleep(1.1)
+            print("Correct!\nYou won!!")
+            print('it took you', count, "guesses!")
+            return count, converting_to_score(difficulty, name)
+
+    except ValueError:
+        print("Wrong!\nStop mess with my software!\nyou lost! ")
