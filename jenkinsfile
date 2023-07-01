@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') { 
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'a0588011-0ff0-44cf-9a6d-20ced963a817', url: 'https://github.com/matbuha/WorldOfGames.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'WorldOfGames_credentials', url: 'https://github.com/dandayan556/WorldOfGames.git']]])
             }
         }
         stage('Build') { 
@@ -18,15 +18,15 @@ pipeline {
         }
         stage('Test') { 
             steps {
-                git branch: 'main', credentialsId: 'a0588011-0ff0-44cf-9a6d-20ced963a817', url: 'https://github.com/matbuha/WorldOfGames.git'
+                git branch: 'main', credentialsId: 'WorldOfGames_credentials', url: 'https://github.com/dandayan556/WorldOfGames.git'
                 bat 'python e2e.py'
             }
         }
         stage('Finalize') { 
             steps {
                 bat 'docker compose stop'
-                bat 'docker tag jenkinsdocker arielbenzikri/jenkinsdocker:latest'
-                bat 'docker push arielbenzikri/jenkinsdocker:latest'
+                bat 'docker tag jenkinsdocker dandayan556/jenkinsdocker:latest'
+                bat 'docker push dandayan556/jenkinsdocker:latest'
             }
         }
     }
