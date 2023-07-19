@@ -1,7 +1,7 @@
 import time
-from Memory_Game import memory_game
-from Guess_game import guess_game
-from Currency_Roulette import currency_roulette
+from memory_game import memory_game
+from guess_game import guess_game
+from currency_roulette import currency_roulette
 
 
 def welcome(name=None):
