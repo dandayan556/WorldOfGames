@@ -1,4 +1,4 @@
-from Live import welcome, load_game
+from live import welcome, load_game
 
 
 name = welcome()
