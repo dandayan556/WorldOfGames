@@ -1,4 +1,4 @@
-from Utils import SCORES_FILE_NAME, BAD_RETURN_CODE
+from utils import SCORES_FILE_NAME, BAD_RETURN_CODE
 
 
 def converting_to_score(difficulty, name):
