@@ -2,7 +2,7 @@ import datetime
 import random
 import time
 from easy_exchange_rates import API
-from Score import converting_to_score
+from score import converting_to_score
 
 
 def currency_roulette(difficulty, name):
