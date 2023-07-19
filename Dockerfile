@@ -12,7 +12,7 @@ COPY Scores.txt /MyDockFile/Scores.txt
 
 COPY . .
 
-CMD ["python", "-u", "MainScores.py"]
+CMD ["python", "-u", "mainScores.py"]
 
 
 
