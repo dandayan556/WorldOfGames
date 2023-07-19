@@ -8,7 +8,7 @@ COPY requierments.txt .
 
 RUN pip install --upgrade pip && pip install -r requierments.txt
 
-COPY Scores.txt /MyDockFile/Scores.txt
+COPY scores.txt /MyDockFile/scores.txt
 
 COPY . .
 
